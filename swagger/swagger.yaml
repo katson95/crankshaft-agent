@@ -1,0 +1,65 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: A Post Management application
+schemes: [http]
+host: jsonplaceholder.typicode.com
+basePath: /
+consumes: [application/json]
+produces: [application/json]
+paths:
+  /posts:
+    get:
+      tags: [post]
+      operationId: List
+      parameters:
+        - in: query
+          name: title
+          type: string
+      responses:
+        200:
+          description: 'Post list'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Post'
+  /posts/{id}:
+    get:
+      tags: [post]
+      operationId: Get
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Post get
+          schema:
+            $ref: '#/definitions/Post'
+        400:
+          description: Bad Request
+        404:
+          description: Post Not Found
+
+definitions:
+  Post:
+    type: object
+    required:
+      - id
+    properties:
+      userId:
+        type: integer
+        format: int64
+        readOnly: true
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      title:
+        type: string
+        example: dog
+      body:
+        type: string
+        example: Bobby
